@@ -20,5 +20,6 @@ public class Presence {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @Enumerated(EnumType.STRING)
     PresenceType presenceType;
 }
