@@ -1,25 +1,36 @@
 package com.marcosgrs.ribeirosevents.config;
 
 import com.marcosgrs.ribeirosevents.filter.AuthByTokenFilter;
-import com.marcosgrs.ribeirosevents.repository.UserRepository;
+import com.marcosgrs.ribeirosevents.domain.repository.UserRepository;
 import com.marcosgrs.ribeirosevents.service.RibeirosEventsUserDetailsService;
 import com.marcosgrs.ribeirosevents.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    RibeirosEventsUserDetailsService ribeirosEventsUserDetailsService;
-    TokenService tokenService;
-    UserRepository userRepository;
+    private final RibeirosEventsUserDetailsService ribeirosEventsUserDetailsService;
+    private final TokenService tokenService;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public SecurityConfig(RibeirosEventsUserDetailsService ribeirosEventsUserDetailsService,
+                          TokenService tokenService, UserRepository userRepository) {
+        this.ribeirosEventsUserDetailsService = ribeirosEventsUserDetailsService;
+        this.tokenService = tokenService;
+        this.userRepository = userRepository;
+    }
 
     @Override
     @Bean

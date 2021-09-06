@@ -1,4 +1,4 @@
-package com.marcosgrs.ribeirosevents.controllers.dto;
+package com.marcosgrs.ribeirosevents.controllers.dto.errors;
 
 import lombok.Data;
 

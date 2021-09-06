@@ -12,3 +12,6 @@ spring:
     show-sql: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+ribeiros-events:
+  jwt-expiration: ${JWT_TOKEN_EXPIRATION:3600000}
+  jwt-secret: ${JWT_TOKEN_SECRET:uk2%81b#s01287@8sbakn!-29nsh12}

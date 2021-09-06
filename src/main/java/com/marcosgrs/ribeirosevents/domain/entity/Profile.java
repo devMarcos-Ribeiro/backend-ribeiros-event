@@ -1,17 +1,19 @@
-package com.marcosgrs.ribeirosevents.domain.model;
+package com.marcosgrs.ribeirosevents.domain.entity;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 @Data
+@Entity
+@Table(name = "profiles")
 public class Profile implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String authority;
 

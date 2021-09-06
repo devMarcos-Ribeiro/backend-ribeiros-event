@@ -1,7 +1,7 @@
 package com.marcosgrs.ribeirosevents.controllers.handler;
 
 import com.marcosgrs.ribeirosevents.controllers.dto.ErrorResponse;
-import com.marcosgrs.ribeirosevents.controllers.dto.ValidationErrorResponse;
+import com.marcosgrs.ribeirosevents.controllers.dto.errors.ValidationErrorResponse;
 import com.marcosgrs.ribeirosevents.exceptions.BadRequestException;
 import com.marcosgrs.ribeirosevents.exceptions.NotFoundException;
 import com.marcosgrs.ribeirosevents.exceptions.UnauthorizedException;

@@ -1,11 +1,11 @@
 package com.marcosgrs.ribeirosevents.service;
 
 import com.marcosgrs.ribeirosevents.config.RibeirosEventsProperties;
-import com.marcosgrs.ribeirosevents.domain.model.User;
+import com.marcosgrs.ribeirosevents.domain.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
@@ -14,10 +14,14 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class TokenService {
 
     private final RibeirosEventsProperties ribeirosEventsProperties;
+
+    @Autowired
+    public TokenService(RibeirosEventsProperties ribeirosEventsProperties) {
+        this.ribeirosEventsProperties = ribeirosEventsProperties;
+    }
 
     public String generateToken(Authentication authentication) {
         String jwt = null;
@@ -29,9 +33,8 @@ public class TokenService {
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()
-                .setIssuer("Namako auth service")
+                .setIssuer("Ribeiros Events backend")
                 .setSubject(logged.getId())
-                .claim("roles", authorities)
                 .setIssuedAt(today)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS256, ribeirosEventsProperties.getJwtSecret()).compact();

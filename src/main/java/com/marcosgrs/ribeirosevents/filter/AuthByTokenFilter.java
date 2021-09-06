@@ -1,7 +1,7 @@
 package com.marcosgrs.ribeirosevents.filter;
 
-import com.marcosgrs.ribeirosevents.domain.model.User;
-import com.marcosgrs.ribeirosevents.repository.UserRepository;
+import com.marcosgrs.ribeirosevents.domain.entity.User;
+import com.marcosgrs.ribeirosevents.domain.repository.UserRepository;
 import com.marcosgrs.ribeirosevents.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
