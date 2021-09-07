@@ -1,6 +1,7 @@
 package com.marcosgrs.ribeirosevents.filter;
 
 import com.marcosgrs.ribeirosevents.domain.entity.User;
+import com.marcosgrs.ribeirosevents.domain.model.UserContext;
 import com.marcosgrs.ribeirosevents.domain.repository.UserRepository;
 import com.marcosgrs.ribeirosevents.service.TokenService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,10 +19,12 @@ public class AuthByTokenFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
     private final UserRepository repository;
+    private final UserContext userContext;
 
-    public AuthByTokenFilter(TokenService tokenService, UserRepository repository) {
+    public AuthByTokenFilter(TokenService tokenService, UserRepository repository, UserContext userContext) {
         this.tokenService = tokenService;
         this.repository = repository;
+        this.userContext = userContext;
     }
 
     @Override
@@ -30,6 +33,7 @@ public class AuthByTokenFilter extends OncePerRequestFilter {
 
         String token = tokenService.retrieveToken(request.getHeader("Authorization"));
         if (tokenService.isValidToken(token)) {
+            userContext.update(token);
             authUser(token);
         }
 

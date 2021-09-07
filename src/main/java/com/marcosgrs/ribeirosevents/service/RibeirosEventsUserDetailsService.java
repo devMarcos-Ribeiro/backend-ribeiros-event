@@ -6,10 +6,12 @@ import com.marcosgrs.ribeirosevents.domain.entity.User;
 import com.marcosgrs.ribeirosevents.domain.model.Role;
 import com.marcosgrs.ribeirosevents.domain.repository.RoleRepository;
 import com.marcosgrs.ribeirosevents.exceptions.InvalidSignUpDataException;
+import com.marcosgrs.ribeirosevents.exceptions.NotFoundException;
 import com.marcosgrs.ribeirosevents.exceptions.UserAlreadyExistsException;
 import com.marcosgrs.ribeirosevents.mapper.SignUpMapper;
 import com.marcosgrs.ribeirosevents.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -64,6 +66,14 @@ public class RibeirosEventsUserDetailsService implements UserDetailsService {
     }
 
     private Profile setUserRole() {
-        return roleRepository.findByAuthority(Role.ROLE_USER.name());
+        return roleRepository.findByAuthority(Role.ROLE_USER.name())
+                .orElseThrow(() -> new
+                        InternalAuthenticationServiceException("ROLE_USER doesn't exists in database."));
+    }
+
+    public User findById(String userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(String
+                        .format("User %s not found", userId)));
     }
 }

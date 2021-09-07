@@ -1,5 +1,6 @@
 package com.marcosgrs.ribeirosevents.config;
 
+import com.marcosgrs.ribeirosevents.domain.model.UserContext;
 import com.marcosgrs.ribeirosevents.filter.AuthByTokenFilter;
 import com.marcosgrs.ribeirosevents.domain.repository.UserRepository;
 import com.marcosgrs.ribeirosevents.service.RibeirosEventsUserDetailsService;
@@ -7,6 +8,7 @@ import com.marcosgrs.ribeirosevents.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,13 +25,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RibeirosEventsUserDetailsService ribeirosEventsUserDetailsService;
     private final TokenService tokenService;
     private final UserRepository userRepository;
+    private final UserContext userContext;
 
     @Autowired
     public SecurityConfig(RibeirosEventsUserDetailsService ribeirosEventsUserDetailsService,
-                          TokenService tokenService, UserRepository userRepository) {
+                          TokenService tokenService, UserRepository userRepository, UserContext userContext) {
         this.ribeirosEventsUserDetailsService = ribeirosEventsUserDetailsService;
         this.tokenService = tokenService;
         this.userRepository = userRepository;
+        this.userContext = userContext;
     }
 
     @Override
@@ -46,9 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.POST, "/signUp").permitAll()
+                .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AuthByTokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new AuthByTokenFilter(tokenService, userRepository, userContext),
+                UsernamePasswordAuthenticationFilter.class);
     }
 }
