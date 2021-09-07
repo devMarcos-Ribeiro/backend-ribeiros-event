@@ -5,6 +5,7 @@ import com.marcosgrs.ribeirosevents.controllers.dto.TokenResponse;
 import com.marcosgrs.ribeirosevents.exceptions.AuthenticationException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,10 @@ public class LoginService {
             Authentication authentication = authenticationManager.authenticate(loginData);
             String token = tokenService.generateToken(authentication);
             return new TokenResponse(token, "Bearer");
-        } catch (Exception e) {
-            throw new AuthenticationException(String.format("Error authenticating user %s: %s", loginDto.getEmail(), e.getMessage()));
+        } catch (BadCredentialsException e) {
+            throw new AuthenticationException(
+                    String.format("Error authenticating user %s: make sure you're passing an valid username and password",
+                            loginDto.getEmail()));
         }
     }
 }

@@ -9,7 +9,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -27,9 +26,6 @@ public class Event {
     private LocalDateTime date;
     @OneToOne
     private User organizer;
-
-    @OneToMany
-    private List<Presence> presences;
 
     @Enumerated(EnumType.STRING)
     private EventStatus status;

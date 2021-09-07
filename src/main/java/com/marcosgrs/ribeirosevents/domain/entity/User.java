@@ -33,8 +33,6 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Profile> authorities;
-    @OneToMany
-    private List<Presence> presences;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

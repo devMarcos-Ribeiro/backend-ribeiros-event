@@ -17,7 +17,6 @@ public class PresenceMapper {
                 .presenceType(PresenceType.fromValue(presenceDto.getPresenceType()))
                 .event(event)
                 .user(user)
-                .id(presenceKey)
                 .build();
     }
 }

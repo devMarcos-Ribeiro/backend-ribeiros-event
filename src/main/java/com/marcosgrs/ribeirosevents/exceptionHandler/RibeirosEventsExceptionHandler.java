@@ -1,4 +1,4 @@
-package com.marcosgrs.ribeirosevents.controllers.handler;
+package com.marcosgrs.ribeirosevents.exceptionHandler;
 
 import com.marcosgrs.ribeirosevents.controllers.dto.ErrorResponse;
 import com.marcosgrs.ribeirosevents.controllers.dto.errors.ValidationErrorResponse;
