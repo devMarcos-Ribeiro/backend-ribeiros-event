@@ -1,0 +1,1 @@
+INSERT INTO profiles (id, authority) VALUES ('6ddd440c-10e8-11ec-82a8-0242ac130003', 'ROLE_USER');

@@ -1,6 +1,5 @@
 package com.marcosgrs.ribeirosevents.domain.entity;
 
-import com.marcosgrs.ribeirosevents.domain.model.EventStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,25 +10,20 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "events")
+@Table(name = "address")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Event {
+public class Address {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    private String name;
-    private LocalDateTime date;
-    @OneToOne
-    private User organizer;
+    private String street;
+    private String city;
+    private String neighbourhood;
+    private String number;
 
-    @Enumerated(EnumType.STRING)
-    private EventStatus status;
-
-    @OneToOne
-    private Address address;
 }
